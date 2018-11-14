@@ -2,7 +2,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import resolve from 'rollup-plugin-node-resolve';
-import uglify from 'rollup-plugin-uglify';
+import babel from 'rollup-plugin-babel';
+// import uglify from 'rollup-plugin-uglify';
 import pkg from './package.json';
 
 export default [
@@ -27,7 +28,18 @@ export default [
       }),
       globals(),
       builtins(),
-      uglify()
+      babel({
+        babelrc: false,
+        presets: [
+          ['env', {
+            modules: false,
+            targets: {
+              ie: '11'
+            }
+          }]
+        ],
+      })
+      // uglify()
     ]
   },
 
